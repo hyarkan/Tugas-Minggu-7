@@ -295,3 +295,58 @@ Fitur Minggu 6:
 - AI Usage Log, OPAR, ADR-002, dan Pull Request template.
 
 Lihat `docs/VERIFIKASI_MINGGU6.md` untuk batas verifikasi, risiko, dan perintah pengujian.
+
+---
+
+## Implementasi Minggu 7 - Jadwal dan Ruangan
+
+Minggu 7 melanjutkan aplikasi PMB dan KRS dengan modul pengelolaan jadwal perkuliahan, ruangan, dosen, dan kelas. Implementasi sebelumnya tetap dipertahankan sebagai fondasi sistem.
+
+### Fitur Minggu 7
+
+- Model SQLAlchemy untuk `ruangan`, `dosen`, `kelas`, dan `jadwal`.
+- Migration Alembic `0005_scheduling`, termasuk foreign key, constraint, dan indeks.
+- Validasi hari dan interval waktu jadwal.
+- Deteksi bentrok ruangan dan dosen menggunakan algoritma naive serta grouping dan sweep.
+- Interval setengah terbuka: jadwal yang berakhir tepat saat jadwal lain dimulai tidak dianggap bentrok.
+- Validasi kapasitas ruangan berdasarkan kuota kelas dan jumlah mahasiswa terdaftar.
+- SchedulingService untuk membuat, memperbarui, menghapus, dan memeriksa konflik jadwal.
+- API penjadwalan dengan respons HTTP terstruktur.
+- Seed data minimal 10 ruangan, 15 dosen, dan 40 jadwal.
+- Pengujian API dan property-based testing menggunakan Hypothesis.
+
+### Hasil Verifikasi Minggu 7
+
+Pemeriksaan pada lingkungan pengembangan lokal menghasilkan:
+
+- `python -m pytest -v`: **74 passed**, dengan satu peringatan deprecation.
+- Migration database berhasil mencapai `0005_scheduling (head)`.
+- `python -m alembic check`: tidak ditemukan operasi upgrade baru.
+- Seed menghasilkan 10 ruangan, 15 dosen, 40 kelas, dan 40 jadwal.
+- Pemeriksaan 40 jadwal hasil seed tidak menemukan konflik.
+- Dua pengujian properti Hypothesis untuk modul penjadwalan berhasil dijalankan.
+
+Hasil tersebut merupakan verifikasi lokal, bukan klaim bahwa seluruh skenario produksi telah diuji. Pengujian concurrency pada PostgreSQL/MySQL dan beban multi-worker masih menjadi batasan.
+
+### Dokumentasi Minggu 7
+
+- [Panduan instalasi dan endpoint Minggu 7](README_MINGGU7.md)
+- [ADR-003: Strategi deteksi konflik](docs/ADR-003-scheduling-interval-tree.md)
+- [OPAR Minggu 7](docs/OPAR_MINGGU7.md)
+- [Laporan verifikasi Minggu 7](docs/VERIFIKASI_MINGGU7.md)
+- [AI Usage Log Minggu 7](AI_USAGE_LOG_MINGGU7.md)
+
+### Riwayat Pengembangan dan Penggunaan AI
+
+Dokumentasi Minggu 3-6 tetap tersedia untuk menjelaskan perkembangan modul PMB dan KRS:
+
+- [AI Usage Log pengembangan sebelumnya](AI_USAGE_LOG.md)
+- [ADR-001: Validasi KRS](docs/ADR-001-krs-validation.md)
+- [ADR-002: State machine dan transaksi KRS](docs/ADR-002-krs-state-transactions.md)
+- [Laporan verifikasi Minggu 6](docs/VERIFIKASI_MINGGU6.md)
+
+Kedua AI Usage Log dipisahkan untuk memudahkan penelusuran kontribusi AI pada setiap tahap pengembangan.
+
+### Menjalankan Modul Minggu 7
+
+Lihat [README_MINGGU7.md](README_MINGGU7.md) untuk langkah instalasi, migration, seed, dan endpoint API.
