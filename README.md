@@ -1,6 +1,6 @@
-# Aplikasi PMB dan KRS — Tugas Minggu 6 (lanjutan Minggu 3–5)
+# Aplikasi PMB, KRS, dan Penjadwalan — Tugas Minggu 7
 
-Aplikasi Penerimaan Mahasiswa Baru berbasis FastAPI, SQLAlchemy 2.0, Alembic, dan SQLite.
+Aplikasi akademik berbasis FastAPI, SQLAlchemy 2.0, Alembic, dan SQLite dengan modul PMB, KRS, serta penjadwalan kelas.
 
 ## Fitur
 
